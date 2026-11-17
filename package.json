@@ -1,0 +1,35 @@
+{
+  "name": "portal-api-finder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Finds the internal API calls behind a portal workflow from a browser-exported HAR file.",
+  "scripts": {
+    "dev": "npm run build:web && tsx watch src/server.ts",
+    "start": "npm run build:web && tsx src/server.ts",
+    "build:web": "esbuild web/main.tsx --bundle --minify --sourcemap --outfile=public/app.js --define:process.env.NODE_ENV=\\\"production\\\" && node -e \"const fs=require('fs');for(const f of ['index.html','styles.css'])fs.copyFileSync('web/'+f,'public/'+f)\"",
+    "demo:portal": "tsx demo/portal.ts",
+    "demo:record": "tsx scripts/record-demo.ts",
+    "analyze": "tsx src/cli.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
