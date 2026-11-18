@@ -8,6 +8,7 @@ import { parseHar, type Har, type HarEntry } from "../src/core/har.ts";
 import { operationOf, parseRequestBody, templatePath } from "../src/core/normalize.ts";
 import { parseAttrs, scrubHar } from "../src/core/scrub.ts";
 import type { Report } from "../src/core/types.ts";
+import { detectIntent } from "../src/core/rank.ts";
 
 const raw: Har = parseHar(readFileSync(new URL("../fixtures/demo-portal.har", import.meta.url), "utf8"));
 const INPUTS = [
@@ -264,5 +265,14 @@ describe("a HAR captured by real Chrome", () => {
     expect(vars.patientId).toBe("GET /api/patients → $.results[0].id");
     expect(vars.slotId).toMatch(/^GET \/api\/providers\/\{providerId\}\/slots → \$\.slots\[\d\]\.slotId$/);
     expect(vars.sid).toBe("POST /login → Set-Cookie sid");
+  });
+});
+
+describe("workflow intent", () => {
+  it("does not treat 'sign in' as a write", () => {
+    expect(detectIntent("Sign in, search for a patient by name, open their chart.")).toBe("read");
+  });
+  it("still treats booking as a write", () => {
+    expect(detectIntent("Book an appointment for an existing patient.")).toBe("write");
   });
 });

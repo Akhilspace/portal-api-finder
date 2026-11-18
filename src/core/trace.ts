@@ -200,9 +200,20 @@ export function requestValues(
     jsonLeaves(body.value, (path, v) => out.push({ in: "body", name: path, value: String(v), match: String(v) }));
   } else if (body.kind === "form" || body.kind === "multipart") {
     for (const f of body.fields) out.push({ in: "body", name: f.name, value: f.value, match: f.value });
+  } else if (body.kind === "text") {
+    // Line-based bodies such as DWR ("c0-param0=string:...") are not forms or JSON. Only lines that
+    // carry a typed value or a secret are used, so tiny constants like "1" are not traced by mistake.
+    for (const line of body.text.split(/\r?\n/)) {
+      const i = line.indexOf("=");
+      if (i <= 0) continue;
+      const value = line.slice(i + 1);
+      if (/\{\{(input|secret):[^}]+\}\}/.test(value)) out.push({ in: "body", name: line.slice(0, i).trim(), value, match: value });
+    }
   }
   return out;
 }
+  
+  
 
 export function resolveBindings(index: ValueIndex, values: RequestValue[]): Binding[] {
   const out: Binding[] = [];

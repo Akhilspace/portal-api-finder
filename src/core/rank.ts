@@ -6,7 +6,7 @@ import type { Call } from "./types.ts";
 const STOP = new Set(
   "the a an and or of for to in on at by with from into then this that it is are be as new page click button form field fields screen open go user users staff clinic portal using via when after before their them our your".split(" "),
 );
-const WRITE_WORDS = /\b(creat\w*|add\w*|book\w*|schedul\w*|submit\w*|sav\w*|post\w*|register\w*|enter\w*|updat\w*|edit\w*|chang\w*|modif\w*|delet\w*|remov\w*|cancel\w*|upload\w*|send\w*|assign\w*|approv\w*|record\w*|log\s+a|check[- ]?in|resched\w*|bill\w*|charg\w*|pay\w*|refill\w*|order\w*|sign\w*)\b/i;
+const WRITE_WORDS = /\b(creat\w*|add\w*|book\w*|schedul\w*|submit\w*|sav\w*|post\w*|register\w*|enter\w*|updat\w*|edit\w*|chang\w*|modif\w*|delet\w*|remov\w*|cancel\w*|upload\w*|send\w*|assign\w*|approv\w*|record\w*|log\s+a|check[- ]?in|resched\w*|bill\w*|charg\w*|pay\w*|refill\w*|order\w*|sign(?!\s*-?\s*in\b)\w*)\b/i;
 const READ_WORDS = /\b(search\w*|find\w*|look\s?up|list\w*|view\w*|get\w*|show\w*|export\w*|download\w*|fetch\w*|read\w*|check\w*|retriev\w*|pull\w*|load\w*|open\w*|display\w*|report\w*|eligib\w*|verif\w*)\b/i;
 const TELEMETRY = /(^|[\/_.-])(telemetry|analytics|track(ing)?|beacon|heartbeat|keep-?alive|ping|metrics?|collect|logs?|logging|rum|csp-report|presence|unread-?count)(\/|$|\.)/i;
 
