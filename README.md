@@ -26,10 +26,7 @@ network, so that was the one thing I wanted to avoid.
 
 ## How I built it
 
-Claude wrote the first version of the code. Then I ran it, recorded workflows against a fake clinic
-portal and the public OpenMRS demo, and fixed what I found. Getting it to build on Windows and getting
-Chrome to include cookies in the HAR took me longer than I expected. The OpenMRS test turned up two
-real bugs in the ranking, which I describe below.
+I used Claude to help create an initial version, then took the project through hands-on testing and refinement. I recorded workflows against a fake clinic portal and the public OpenMRS demo, worked through Windows build issues and Chrome’s HAR cookie settings, and fixed two ranking bugs that surfaced in the OpenMRS test. I also verified that the generated snippet could replay an appointment workflow in the browser.
 
 ## Running it
 
